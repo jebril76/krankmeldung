@@ -48,17 +48,6 @@ services:
       - /opt/krankmeldung/config/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
     networks:
       - proxy
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: laravel-phpmyadmin
-    ports:
-      - ${DB_MYADMIN_PORT}:80
-    networks:
-      - proxy
-    depends_on:
-      - db
-    environment:
-      PMA_ARBITRARY: 1
 networks:
   proxy:
     driver: bridge
