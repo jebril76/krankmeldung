@@ -8,7 +8,7 @@ Voraussetzungen:
 1. Ein Server auf dem docker-compose und git installiert sind. (z.B. unter Debian: apt-get install docker-compose git)
 
 Installation:
-1. git download
+1. git clone https://github.com/jebril76/Krankmeldung.git && rm -rf Krankmeldung/.git
 2. .env anpassen.
 3. docker-compose up -d
 
