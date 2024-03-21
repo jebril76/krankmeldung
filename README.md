@@ -5,14 +5,14 @@ Mit ihr können Krankmeldungen von Schülern schnell erfasst und verwaltet werde
 Der Zugang ist nicht geschützt. Daher sollte die App nur im lokalen Verwaltungsnetz abgelegt werden.
 
 Voraussetzungen:
-1. Ein Server mit root-shell.
+1. Ein Server mit Root-Shell.
 
 Installation
 1. Installiere Docker-Compose und git. (z.B. unter Debian: "apt-get update && apt-get install -y docker-compose git")
 2. mkdir /opt (sofern nicht schon vorhanden).
 3. cd /opt
 4. git clone https://github.com/jebril76/krankmeldung.git && rm -rf krankmeldung/.git
-5. Die Datein /opt/krankmeldung/.env anpassen.
+5. Die Datei /opt/krankmeldung/.env anpassen.
 6. cd krankmeldung
 7. docker-compose up -d
 
