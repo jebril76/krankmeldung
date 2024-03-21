@@ -9,10 +9,12 @@ Voraussetzungen:
 
 Installation
 1. Installiere Docker-Compose und git. (z.B. unter Debian: "apt-get update && apt-get install -y docker-compose git")
-1. mkdir /opt && cd /opt
-1. git clone https://github.com/jebril76/krankmeldung.git && rm -rf Krankmeldung/.git
-2. .env anpassen.
-3. docker-compose up -d
+2. mkdir /opt (sofern nicht schon vorhanden).
+3. cd /opt
+4. git clone https://github.com/jebril76/krankmeldung.git && rm -rf krankmeldung/.git
+5. Die Datein /opt/krankmeldung/.env anpassen.
+6. cd krankmeldung
+7. docker-compose up -d
 
 Zugang über http://***APP_URL***/m
 
