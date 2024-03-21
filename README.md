@@ -10,7 +10,7 @@ Voraussetzungen:
 Installation
 1. Installiere Docker-Compose und git. (z.B. unter Debian: "apt-get update && apt-get install -y docker-compose git")
 1. mkdir /opt && cd /opt
-1. git clone https://github.com/jebril76/Krankmeldung.git && rm -rf Krankmeldung/.git
+1. git clone https://github.com/jebril76/krankmeldung.git && rm -rf Krankmeldung/.git
 2. .env anpassen.
 3. docker-compose up -d
 
