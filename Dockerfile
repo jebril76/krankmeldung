@@ -50,6 +50,7 @@ RUN ln -s ./$appname ./laravel
 #### Install App
 COPY --chown=$user imagefiles /var/www/$appname/
 COPY --chown=$user .env /var/www/$appname/.env
+RUN chmod 700 /var/www/$appname/start.sh
 #### Get mc running nonroot
 COPY --chown=$user ./config/.bashrc /home/$user/.bashrc
 WORKDIR /var/www/$appname
