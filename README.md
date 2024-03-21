@@ -5,9 +5,11 @@ Mit ihr können Krankmeldungen von Schülern schnell erfasst und verwaltet werde
 Der Zugang ist nicht geschützt.
 
 Voraussetzungen:
-1. Ein Server auf dem docker-compose und git installiert sind. (z.B. unter Debian: apt-get install docker-compose git)
+1. Ein Server mit root-shell.
 
-Installation:
+Installation
+1. Installiere Docker-Compose und git. (z.B. unter Debian: "apt-get update && apt-get -y install docker-compose git")
+1. mkdir /opt && cd /opt
 1. git clone https://github.com/jebril76/Krankmeldung.git && rm -rf Krankmeldung/.git
 2. .env anpassen.
 3. docker-compose up -d
