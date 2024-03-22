@@ -11,6 +11,9 @@ Voraussetzungen:
 Installation
 1. mkdir /opt (Fehler ignorieren)
 2. cd /opt && git clone https://github.com/jebril76/krankmeldung.git && rm -rf krankmeldung/.git && cd krankmeldung && chmod 700 ./setup.sh && ./setup.sh
+3. Hostnamen des Servers eingeben.
+4. Für das EMail-Backup die Emailadresse und das Passwort eingeben.
+5. Abwarten und Tee trinken.
 
 Zugang über http://***APP_URL***/m
 
