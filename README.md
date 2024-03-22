@@ -15,5 +15,7 @@ Installation
 4. Für das EMail-Backup die Emailadresse und das Passwort eingeben.
 5. Abwarten und Tee trinken.
 
-Zugang über http://***HOSTNAME***/m
+Zugang Verwaltung über http://**HOSTNAME**/m
+Zugang Lehrer über http://**HOSTNAME**/l
+Zugang InfoScreen über http://**HOSTNAME**/i
 
