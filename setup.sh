@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+chown 1000:1000 ./backups/
 __dotenv=
 __dotenv_file=
 __dotenv_cmd=.env
