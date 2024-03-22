@@ -7,7 +7,6 @@ Der Zugang ist nicht geschützt. Daher sollte die App nur im lokalen Verwaltungs
 Voraussetzungen:
 1. Ein Server mit Root-Shell.
 2. Installiere Docker-Compose und git. (z.B. unter Debian: "apt-get update && apt-get install -y docker-compose git")
-3. 
 
 Installation
 1. mkdir /opt (Fehler ignorieren)
