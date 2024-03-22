@@ -1,8 +1,8 @@
-Hi, 
-Docker Container der auf Basis von Laravel eine App bereitstellt.
-Die App wurde für das Sekretariat einer Schule in NRW entwickelt.
-Mit ihr können Krankmeldungen von Schülern schnell erfasst und verwaltet werden.
-Der Zugang ist nicht geschützt. Daher sollte die App nur im lokalen Verwaltungsnetz abgelegt werden.
+Hi, <br>
+Docker Container der auf Basis von Laravel eine App bereitstellt.<br>
+Die App wurde für das Sekretariat einer Schule in NRW entwickelt.<br>
+Mit ihr können Krankmeldungen von Schülern schnell erfasst und verwaltet werden.<br>
+Der Zugang ist nicht geschützt. Daher sollte die App nur im lokalen Verwaltungsnetz abgelegt werden.<br>
 
 Voraussetzungen:
 1. Ein Server mit Root-Shell.
@@ -15,7 +15,7 @@ Installation
 4. Für das EMail-Backup die Emailadresse und das Passwort eingeben.
 5. Abwarten und Tee trinken.
 
-Zugang Verwaltung über http://**HOSTNAME**/m
-Zugang Lehrer über http://**HOSTNAME**/l
-Zugang InfoScreen über http://**HOSTNAME**/i
+Zugang Verwaltung über http://**HOSTNAME**/m<br>
+Zugang Lehrer über http://**HOSTNAME**/l<br>
+Zugang InfoScreen über http://**HOSTNAME**/i<br>
 
