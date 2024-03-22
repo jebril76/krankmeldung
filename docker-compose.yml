@@ -27,6 +27,8 @@ services:
       - db
   db:
     image: mariadb:latest
+#für Raspberrys 
+#    image: ghcr.io/linuxserver/mariadb:alpine
     container_name: laravel-mariadb
     restart: unless-stopped
     environment:
