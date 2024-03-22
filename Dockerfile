@@ -3,12 +3,12 @@ ARG user
 ARG uid
 ARG cron
 ARG appname
-ARG LANG
+ARG LANGK
 ARG LANGUAGE
 ARG TZ
-ENV LANG $LANG
+ENV LANG $LANGK
 ENV LANGUAGE $LANGUAGE
-ENV LC_ALL $LANG
+ENV LC_ALL $LANGK
 RUN apt update && apt install -y locales
 #### Language
 RUN echo "locales locales/default_environment_locale select $LANG" | debconf-set-selections
