@@ -15,5 +15,5 @@ Installation
 4. Für das EMail-Backup die Emailadresse und das Passwort eingeben.
 5. Abwarten und Tee trinken.
 
-Zugang über http://***APP_URL***/m
+Zugang über http://***HOSTNAME***/m
 
