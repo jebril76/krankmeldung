@@ -14,7 +14,7 @@ else $setdate=date("d.m.Y");
     $(document).ready(function() {
         $.ajax({
             url:"{{ route('m_reported_sus') }}",
-            type:"POST",
+            type:"GET",
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data:{'sdate':'<?php echo $setdate; ?>'},
             success:function (data2) {
