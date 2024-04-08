@@ -55,7 +55,7 @@ class ReportController extends Controller
 
     public function m_reported_sus(Request $request)
     {
-        $sdate = convertDate($request->post('sdate'));
+        $sdate = convertDate($request->get('sdate'));
         $now = date('Y-m-d');
         $data=DB::select('
             WITH res AS (WITH CTE AS (
