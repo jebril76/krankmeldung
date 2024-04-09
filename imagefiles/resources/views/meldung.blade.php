@@ -210,7 +210,7 @@ else $setdate=date("d.m.Y");
     $('#searchStudent').on('keydown',function search(e) {
         if(e.keyCode == 13) {
             var ok=false;
-            if ($('#searchStudent').val().length>0) {
+            if ($('#searchStudent').val().length>2) {
                 var id=$("[id^='add-']").first().attr('id').split("-");
                 var heute = new Date();
                 var heute = new Date(heute.getFullYear(), heute.getMonth(), heute.getDate());
@@ -299,15 +299,17 @@ else $setdate=date("d.m.Y");
     $('#searchStudent').on('keyup',function() {
         var query = $(this).val(); 
         var sdate = $("#datepicker").val();
-        $.ajax({
-            url:"{{ route('m_search_sus') }}",
-            type:"POST",
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            data:{'query':query,'sdate':sdate},
-            success:function (data) {
-                $('#StudentList').html(data);
-            }
-        })
+        if ($('#searchStudent').val().length>2) {
+            $.ajax({
+                url:"{{ route('m_search_sus') }}",
+                type:"POST",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{'query':query,'sdate':sdate},
+                success:function (data) {
+                    $('#StudentList').html(data);
+                }
+            })
+        }
     });
 </script>
 @endpush
