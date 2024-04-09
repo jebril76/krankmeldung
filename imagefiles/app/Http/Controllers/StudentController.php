@@ -41,11 +41,11 @@ class StudentController extends Controller
         $mixed = array();
         foreach($search as $part){
             if(intval($part)){
-                if (intval($part)<11) $mixed[]=$part;
+                if (strlen($part)<3 && intval($part)<11 && intval($part)>4) $mixed[]=$part;
                 if (strlen($part)>2) $numbers[] = $part;
             }else{
                 if (preg_match('~[0-9]+~', $part)) {
-                    $mixed[]=$part;
+                    if (strlen($part)<4) $mixed[]=$part;
                 } else {
                     if (strlen($part)>2) $names[] = $part;
                 }
