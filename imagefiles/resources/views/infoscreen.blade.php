@@ -13,7 +13,7 @@ else $setdate=date("d.m.Y");
 <script type="text/javascript">
     $(document).ready(function() {
         $.ajax({
-            url:"{{ route('m_reported_sus') }}",
+            url:"{{ route('i_reported_sus') }}",
             type:"GET",
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data:{'sdate':'<?php echo $setdate; ?>'},
