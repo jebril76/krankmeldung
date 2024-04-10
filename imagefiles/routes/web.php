@@ -37,4 +37,4 @@ Route::post('/c_backup_rep',   [ReportController::class,'c_backup_rep'])->name('
 Route::post('/c_trash_rep',    [ReportController::class,'c_trash_rep'])->name('c_trash_rep');
 Route::post('/c_trash_all',    [ReportController::class,'c_trash_all'])->name('c_trash_all');
 Route::post('/l_show_rep',     [ReportController::class,'l_show_rep'])->name('l_show_rep');
-
+Route::get('/i_reported_sus', [ReportController::class,'i_reported_sus'])->name('i_reported_sus');
