@@ -22,7 +22,7 @@ Route::get('/l', function () { return view('lehrer'); });
 Route::get('/i', function () { return view('infoscreen'); });
 Route::get('/c', [ReportController::class,'v_config'])->name('v_config');
 
-Route::get('/m_search_sus',   [StudentController::class,'m_search_sus'])->name('m_search_sus');
+Route::post('/m_search_sus',   [StudentController::class,'m_search_sus'])->name('m_search_sus');
 Route::post('/c_trash_sus',    [StudentController::class,'c_trash_sus'])->name('c_trash_sus');
 Route::post('/c_import_sus1',  [StudentController::class,'c_import_sus1'])->name('c_import_sus1');
 Route::post('/c_import_sus2',  [StudentController::class,'c_import_sus2'])->name('c_import_sus2');
