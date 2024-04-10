@@ -55,6 +55,50 @@ class ReportController extends Controller
 
     public function m_reported_sus(Request $request)
     {
+        $sdate = convertDate($request->post('sdate'));
+        $now = date('Y-m-d');
+        $data=DB::select('
+            WITH res AS (WITH CTE AS (
+                    SELECT student_id, comment, date, date - INTERVAL (ROW_NUMBER() OVER (ORDER BY student_id, date)) DAY AS conday
+                    FROM reports WHERE date>=?
+                    ORDER BY student_id, date)
+                SELECT students.id, students.firstname, students.lastname, students.class, MIN(CTE.date) AS SD, MAX(CTE.date) AS ED FROM CTE, students WHERE CTE.student_id=students.id Group by CTE.Student_id, conday)
+            SELECT id, class, firstname, lastname, reports.comment, ED
+            FROM res
+            Join reports on res.id=reports.student_id and res.SD=reports.date 
+            WHERE SD=?
+            ORDER BY class, lastname, firstname;', [$sdate, $sdate]);
+        $output = '';
+        if (count($data) > 0) {
+            $output = '<table width="100%" class="table table-striped">';
+            foreach ($data as $row) {
+                $output .= '
+                    <tr width="100%" rel="tab-' . $row->id . '">
+                        <td>
+                            <input id="del-' . $row->id . '" type="button" class="btn btn-light btn-outline-secondary btn-sm" value="<=">
+                        </td>
+                        <td nowrap width="1%" valign="middle">
+                            ' . $row->firstname . ' ' . $row->lastname .' (' . $row->class . ')
+                        </td>
+                        <td width="100%">
+                            <input id="com-' . $row->id . '" width="100%" style="width:100%" size="" type="text" value="' . $row->comment . '">
+                        </td>';
+                if (date($sdate)>=$now) $output .= '
+                        <td>
+                            <input id="enddate-' . $row->id . '" name="enddate-' . $row->id . '" class="btn btn-light btn-outline-secondary btn-sm" size="10" type="text" value="'.convertDate($row->ED).'">
+                        </td>';
+                $output .= '
+                    </tr>';
+            }
+            $output .= '</table>';
+        } else {
+            $output .= '<table><tr><td>' . 'Kein Meldungen' . '</td></tr></table>';
+        }
+        return $output;
+    }
+
+    public function i_reported_sus(Request $request)
+    {
         $sdate = convertDate($request->get('sdate'));
         $now = date('Y-m-d');
         $data=DB::select('
