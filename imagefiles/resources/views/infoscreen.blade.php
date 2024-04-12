@@ -28,6 +28,8 @@ else $setdate=date("d.m.Y");
     var striped=true;
     function anim() {
         var rowh= ($('tr').height());
+        var rowa= ($('tr:eq(1)').height());
+        var rowb= ($('tr:eq(2)').height());
         if (rowh == undefined) rowh=47;
         else {
             if($(".table-responsive").height()<($(".table-responsive tr").length*rowh)){
@@ -48,7 +50,7 @@ else $setdate=date("d.m.Y");
                 $(".table").addClass("table-striped");
             }
         }
-        $el.animate({scrollTop: 2*rowh}, {duration:{{ config('custom.infoscreenspeed') }}, easing:'linear', complete: anim});
+        $el.animate({scrollTop: rowa+rowb}, {duration:{{ config('custom.infoscreenspeed') }}, easing
     }
     anim();
 </script>
