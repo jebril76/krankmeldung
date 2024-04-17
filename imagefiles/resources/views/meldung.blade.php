@@ -299,7 +299,7 @@ else $setdate=date("d.m.Y");
     $('#searchStudent').on('keyup',function() {
         var query = $(this).val(); 
         var sdate = $("#datepicker").val();
-        if ($('#searchStudent').val().length>2) {
+        if ($('#searchStudent').val().length>1) {
             $.ajax({
                 url:"{{ route('m_search_sus') }}",
                 type:"POST",
