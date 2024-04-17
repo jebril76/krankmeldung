@@ -12,47 +12,69 @@ else $setdate=date("d.m.Y");
 @push('script')
 <script type="text/javascript">
     $(document).ready(function() {
-        $.ajax({
-            url:"{{ route('i_reported_sus') }}",
-            type:"GET",
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            data:{'sdate':'<?php echo $setdate; ?>'},
-            success:function (data2) {
-                $('#ReportList').html(data2);
-                $('[id^="del-"]').hide();
-                $(".table-striped").removeClass("table-striped");
-            }
-        });
-    });
-    var $el = $(".table-responsive");
-    var striped=true;
-    function anim() {
-        var rowh= ($('tr').height());
-        var rowa= ($('tr:eq(1)').height());
-        var rowb= ($('tr:eq(2)').height());
-        if (rowh == undefined) rowh=47;
-        else {
-            if($(".table-responsive").height()<($(".table-responsive tr").length*rowh)){
-                var row1 = $('tr:first').remove().clone();
-                $('.table').append(row1);
-                if (striped) {
-                    $(".table>tbody>tr:nth-child(odd)>td").css({backgroundColor: "#f2f2f2"});
-                    $(".table>tbody>tr:nth-child(even)>td").css({backgroundColor: "#ffffff"});
-                    striped=false;
-                }
-                else {
-                    $(".table>tbody>tr:nth-child(even)>td").css({backgroundColor: "#f2f2f2"});
-                    $(".table>tbody>tr:nth-child(odd)>td").css({backgroundColor: "#ffffff"});
-                    striped=true;
-                }
-            }
-            else {
-                $(".table").addClass("table-striped");
+        var $table;
+        var $tbody;
+        var $tableResponsive;
+        var $el;
+        var $rows;
+        var $rowsto;
+        var totalHeight = 0;
+        var striped = true;
+        var baseScrollSpeed = {{ config('custom.infoscreenspeed') }};
+        function appendAndStyleRow() {
+            if (striped) {
+                $(".table>tbody>tr:nth-child(odd)>td").css("backgroundColor", "#f2f2f2");
+                $(".table>tbody>tr:nth-child(even)>td").css("backgroundColor", "#ffffff");
+                striped = false;
+            } else {
+                $(".table>tbody>tr:nth-child(even)>td").css("backgroundColor", "#f2f2f2");
+                $(".table>tbody>tr:nth-child(odd)>td").css("backgroundColor", "#ffffff");
+                striped = true;
             }
         }
-        $el.animate({scrollTop: rowa+rowb}, {duration:{{ config('custom.infoscreenspeed') }}, easing:'linear', complete: anim});
-    }
-    anim();
+        $.ajax({
+            url: "{{ route('i_reported_sus') }}",
+            type: "GET",
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            data: { 'sdate': '<?php echo $setdate; ?>' },
+            success: function(data2) {
+                $('#ReportList').html(data2);
+                $table = $(".table");
+                $tbody = $table.find("tbody");
+                $tableResponsive = $(".table-responsive");
+                $el = $tableResponsive;
+                $rows = $tbody.find("tr");
+                $rows.each(function() {
+                    totalHeight += $(this).height();
+                });
+                if ($tableResponsive.height() < totalHeight) {
+                    $table.append($rows.eq(0).clone());
+                }
+                anim();
+            }
+        });
+        function anim() {
+            var averageRowHeight = totalHeight / $rows.length;
+            if ($tableResponsive.height() < totalHeight) {
+                $rows.eq(0).remove();
+                $table.append($rows.eq(1).clone());
+                $tbody = $table.find("tbody");
+                $rows = $tbody.find("tr");
+                appendAndStyleRow();
+            } else {
+                $table.addClass("table-striped");
+            }
+    
+            var actualRowHeight = $rows.eq(0).height();
+            var speedAdjustmentFactor = actualRowHeight / averageRowHeight ;
+            var adjustedScrollSpeed = baseScrollSpeed * speedAdjustmentFactor;
+            $el.animate({ scrollTop: '+=' + actualRowHeight }, {
+                duration: adjustedScrollSpeed,
+                easing: 'linear',
+                complete: anim
+            });
+        }
+    });
 </script>
 <style type="text/css">
     body {
