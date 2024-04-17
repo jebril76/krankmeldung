@@ -50,7 +50,7 @@ else $setdate=date("d.m.Y");
                 $(".table").addClass("table-striped");
             }
         }
-        $el.animate({scrollTop: rowa+rowb}, {duration:{{ config('custom.infoscreenspeed') }}, easing
+        $el.animate({scrollTop: rowa+rowb}, {duration:{{ config('custom.infoscreenspeed') }}, easing:'linear', complete: anim});
     }
     anim();
 </script>
