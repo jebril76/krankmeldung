@@ -33,72 +33,33 @@ class StudentController extends Controller
 {
     public function m_search_sus(Request $request)
     {
+        function DigitsAndLetters($str) {
+            return preg_match('/^\d{1,2}[a-zA-Z]$/', $str) === 1;
+        }
         $sdate = convertDate($request->post('sdate'));
         $search = preg_split('/\s+/', $request->post('query'), -1, PREG_SPLIT_NO_EMPTY);
-/*
-        $names = array();
-        $numbers = array();
-        $mixed = array();
-        foreach($search as $part){
-            if(intval($part)){
-                if (strlen($part)<3 && intval($part)<11 && intval($part)>4) $mixed[]=$part;
-                if (strlen($part)>2) $numbers[] = $part;
-            }else{
-                if (preg_match('~[0-9]+~', $part)) {
-                    if (strlen($part)<4) $mixed[]=$part;
-                } else {
-                    if (strlen($part)>2) $names[] = $part;
-                }
-            }
-        }
-        $data=student::where(function($q) use($names,$mixed,$numbers){
-            foreach ($names as $name) {
-                foreach ($numbers as $number) {
-                    foreach ($mixed as $mixe) {
-                        $q->where(function($and) use($name, $number, $mixe) {
-                            $and->where('firstname', 'LIKE', '%'.$name.'%')
-                                ->orwhere('lastname','LIKE', '%'.$name.'%')
-                                ->orwhere('class','LIKE', '%'.$mixe.'%')
-                                ->orwhere('phones','LIKE', '%'.$number.'%');
+        $sdate = convertDate($request->post('sdate'));
+        $search = preg_split('/\s+/', $request->post('query'), -1, PREG_SPLIT_NO_EMPTY);
+        $data = Student::whereNotExists(function ($query) use ($sdate) {
+                $query->select(DB::raw(1))
+                    ->from('reports')
+                    ->whereColumn('reports.student_id', 'students.id')
+                    ->where('reports.date', $sdate);
+            })
+            ->where(function ($query) use ($search) {
+                foreach ($search as $part) {
+                    if (ctype_alpha($part) && strlen($part)>2) {
+                        $query->where(function ($innerQuery) use ($part) {
+                            $innerQuery->where('firstname', 'LIKE', '%' . $part . '%')
+                                ->orWhere('lastname', 'LIKE', '%' . $part . '%');
                         });
+                    } elseif (ctype_digit($part) && strlen($part)>2) {
+                        $query->orWhere('phones', 'LIKE', '%' . $part . '%');
+                    } elseif (DigitsAndLetters($part)){
+                        $query->orWhere('class', 'LIKE', '%' . $part . '%');
                     }
                 }
-            }
-        })
-//Schüler die bereits ausgewählt wurden raus nehmen.
-            ->whereNotExists(function($notin) use($sdate){
-                $notin->select(DB::raw(1))
-                    ->from('reports')
-                    ->where('reports.date', $sdate)
-                    ->whereRaw('students.id = reports.student_id');
             })
-//Nach Klasse und Nachname sortieren und auf 50 begrenzen.
-            ->orderBy('class')
-            ->orderBy('lastname')
-            ->limit(50)
-            ->get();
-*/        
-//Schüler mit passendem Vor-/Nachnamen oder Klasse wählen.
-        $data=student::where(function($q) use($search){
-            foreach ($search as $part) {
-                if (strlen($part)>2) $phopart=$part;
-                else $phopart="xxx";
-                $q->where(function($and) use($part, $phopart) {
-                        $and->where('firstname', 'LIKE', '%'.$part.'%')
-                            ->orwhere('lastname','LIKE', '%'.$part.'%')
-                            ->orwhere('class','LIKE', '%'.$part.'%')
-                            ->orwhere('phones','LIKE', '%'.$phopart.'%');
-                    });
-                }
-            })
-//Schüler die bereits ausgewählt wurden raus nehmen.
-            ->whereNotExists(function($notin) use($sdate){
-                $notin->select(DB::raw(1))
-                    ->from('reports')
-                    ->where('reports.date', $sdate)
-                    ->whereRaw('students.id = reports.student_id');
-            })
-//Nach Klasse und Nachname sortieren und auf 50 begrenzen.
             ->orderBy('class')
             ->orderBy('lastname')
             ->limit(50)
