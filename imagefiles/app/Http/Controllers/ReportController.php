@@ -106,35 +106,29 @@ class ReportController extends Controller
         $sdate = convertDate($request->get('sdate'));
         $now = date('Y-m-d');
         $data=DB::select('
-            WITH res AS (WITH CTE AS (
-                    SELECT student_id, comment, date, date - INTERVAL (ROW_NUMBER() OVER (ORDER BY student_id, date)) DAY AS conday
-                    FROM reports WHERE date>=?
-                    ORDER BY student_id, date)
-                SELECT students.id, students.firstname, students.lastname, students.class, MIN(CTE.date) AS SD, MAX(CTE.date) AS ED FROM CTE, students WHERE CTE.student_id=students.id Group by CTE.Student_id, conday)
-            SELECT id, class, firstname, lastname, reports.comment, ED
-            FROM res
-            Join reports on res.id=reports.student_id and res.SD=reports.date 
-            WHERE SD=?
-            ORDER BY class, lastname, firstname;', [$sdate, $sdate]);
+            WITH CTE AS (
+                SELECT r.student_id, r.comment, r.date, r.date - INTERVAL (ROW_NUMBER() OVER (PARTITION BY r.student_id ORDER BY r.date)) DAY AS conday
+                FROM reports r
+                WHERE r.date >= ?)
+            SELECT s.id, s.class, s.firstname, s.lastname, r.comment, r.date AS ED
+            FROM (
+                SELECT student_id, MIN(date) AS SD
+                FROM CTE
+                GROUP BY student_id, conday) AS CTE_SD
+                INNER JOIN students s ON CTE_SD.student_id = s.id
+                INNER JOIN reports r ON CTE_SD.student_id = r.student_id AND CTE_SD.SD = r.date
+                WHERE CTE_SD.SD = ?
+                ORDER BY s.class, s.lastname, s.firstname;
+            ', [$sdate, $sdate]);
         $output = '';
         if (count($data) > 0) {
             $output = '<table width="100%" class="table table-striped">';
             foreach ($data as $row) {
                 $output .= '
                     <tr width="100%" rel="tab-' . $row->id . '">
-                        <td>
-                            <input id="del-' . $row->id . '" type="button" class="btn btn-light btn-outline-secondary btn-sm" value="<=">
-                        </td>
-                        <td nowrap width="1%" valign="middle">
-                            ' . $row->firstname . ' ' . $row->lastname .' (' . $row->class . ')
-                        </td>
-                        <td width="100%">
-                            <input id="com-' . $row->id . '" width="100%" style="width:100%" size="" type="text" value="' . $row->comment . '">
-                        </td>';
-                if (date($sdate)>=$now) $output .= '
-                        <td>
-                            <input id="enddate-' . $row->id . '" name="enddate-' . $row->id . '" class="btn btn-light btn-outline-secondary btn-sm" size="10" type="text" value="'.convertDate($row->ED).'">
-                        </td>';
+                        <td>' . $row->firstname . ' ' . $row->lastname .' (' . $row->class . ') ';
+                if ($row->comment != '') $output .= '['.$row->comment.'] ';
+                if (date($row->ED) > $now) $output .= '('.convertDate($row->ED).')';
                 $output .= '
                     </tr>';
             }
