@@ -122,7 +122,7 @@ class ReportController extends Controller
             ', [$sdate, $sdate]);
         $output = '';
         if (count($data) > 0) {
-            $output = '<table width="100%" class="table table-striped">';
+            $output = '<table width="100%" class="table">';
             foreach ($data as $row) {
                 $output .= '
                     <tr width="100%" rel="tab-' . $row->id . '">
