@@ -48,7 +48,7 @@ class StudentController extends Controller
             })
             ->where(function ($query) use ($search) {
                 foreach ($search as $part) {
-                    if (ctype_alpha($part) && strlen($part)>2) {
+                    if ((ctype_alpha($part) || strpos($part, 'ä') !== false || strpos($part, 'ö') !== false || strpos($part, 'ü') !== false || strpos($part, 'ß') !== false) && strlen($part)>2) {
                         $query->where(function ($innerQuery) use ($part) {
                             $innerQuery->where('firstname', 'LIKE', '%' . $part . '%')
                                 ->orWhere('lastname', 'LIKE', '%' . $part . '%');
