@@ -52,8 +52,9 @@ class BackupMailer extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromData(fn() => $this->mailData['sql'], $this->mailData['name'])
-                ->withMime('text/plain'),
+#            Attachment::fromData(fn() => $this->mailData['sql'], $this->mailData['name'])
+#                ->withMime('text/plain'),
+            Attachment::fromPath(fn() => $this->mailData['sql']),
         ];
     }
 }
