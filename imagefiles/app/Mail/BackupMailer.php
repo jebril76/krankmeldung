@@ -54,7 +54,7 @@ class BackupMailer extends Mailable
         return [
 #            Attachment::fromData(fn() => $this->mailData['sql'], $this->mailData['name'])
 #                ->withMime('text/plain'),
-            Attachment::fromPath(fn() => $this->mailData['sql']),
+            Attachment::fromPath($this->mailData['sql']),
         ];
     }
 }
