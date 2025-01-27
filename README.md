@@ -5,7 +5,7 @@ Mit ihr können Krankmeldungen von Schülern schnell erfasst und verwaltet werde
 Der Zugang ist nicht geschützt. Daher sollte die App nur im lokalen Verwaltungsnetz abgelegt werden.<br>
 
 Voraussetzungen:
-1. Ein Server mit Root-Shell.
+1. Ein debian basierter amd64 Server mit Root-Shell.
 2. Installiere Docker-Compose und git. (z.B. unter Debian: "apt-get update && apt-get install -y docker-compose git")
 
 Installation
